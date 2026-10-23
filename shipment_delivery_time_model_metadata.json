@@ -1,0 +1,17 @@
+{
+  "project": "Logistic Shipment Date and Time Predictor",
+  "target": "delivery_time_hours",
+  "best_model": "Extra Trees",
+  "feature_columns": [
+    "delivery_partner",
+    "package_type",
+    "vehicle_type",
+    "delivery_mode",
+    "region",
+    "weather_condition",
+    "distance_km",
+    "package_weight_kg"
+  ],
+  "target_unit": "hours",
+  "random_state": 42
+}
