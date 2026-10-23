@@ -5,8 +5,7 @@ import tailwindcss from '@tailwindcss/vite'
 import fs from 'node:fs'
 import path from 'node:path'
 
-import siteConfiguration from './.figma/make/site.json'
-
+const siteConfiguration = {}
 // Vite config — https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const emitSourcemaps = mode === 'development'
