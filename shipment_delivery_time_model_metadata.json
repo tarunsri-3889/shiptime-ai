@@ -7,11 +7,16 @@
     "package_type",
     "vehicle_type",
     "delivery_mode",
-    "region",
-    "weather_condition",
     "distance_km",
     "package_weight_kg"
   ],
   "target_unit": "hours",
-  "random_state": 42
+  "random_state": 42,
+  "training_rows": 20000,
+  "test_rows": 5000,
+  "metrics": {
+    "mae_hours": 1.9262,
+    "rmse_hours": 2.3927,
+    "r2": 0.409
+  }
 }
