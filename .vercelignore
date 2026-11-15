@@ -1,0 +1,10 @@
+# This Vercel project serves only the Vite frontend. The Python API and its
+# model dependencies are deployed separately to Render.
+backend.py
+train_model.py
+requirements.txt
+pyproject.toml
+runtime.txt
+.python-version
+*.joblib
+*_metadata.json
