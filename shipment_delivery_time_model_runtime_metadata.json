@@ -1,0 +1,23 @@
+{
+  "project": "Logistic Shipment Date and Time Predictor",
+  "target": "delivery_time_hours",
+  "best_model": "Extra Trees (100 trees, min leaf 4)",
+  "feature_columns": [
+    "delivery_partner",
+    "package_type",
+    "vehicle_type",
+    "delivery_mode",
+    "distance_km",
+    "package_weight_kg"
+  ],
+  "target_unit": "hours",
+  "random_state": 42,
+  "training_rows": 20000,
+  "test_rows": 5000,
+  "metrics": {
+    "mae_hours": 1.8949,
+    "rmse_hours": 2.3447,
+    "r2": 0.4325
+  },
+  "source_model_retained": "shipment_delivery_time_model.joblib"
+}

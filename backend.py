@@ -10,8 +10,10 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 
 BASE_DIR = Path(__file__).resolve().parent
-MODEL_PATH = BASE_DIR / "shipment_delivery_time_model.joblib"
-METADATA_PATH = BASE_DIR / "shipment_delivery_time_model_metadata.json"
+RUNTIME_MODEL_PATH = BASE_DIR / "shipment_delivery_time_model_runtime.joblib"
+RUNTIME_METADATA_PATH = BASE_DIR / "shipment_delivery_time_model_runtime_metadata.json"
+MODEL_PATH = RUNTIME_MODEL_PATH if RUNTIME_MODEL_PATH.exists() else BASE_DIR / "shipment_delivery_time_model.joblib"
+METADATA_PATH = RUNTIME_METADATA_PATH if RUNTIME_METADATA_PATH.exists() else BASE_DIR / "shipment_delivery_time_model_metadata.json"
 
 app = Flask(__name__)
 CORS(app)

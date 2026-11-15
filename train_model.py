@@ -134,6 +134,35 @@ def main():
     (output_dir / "shipment_delivery_time_model_metadata.json").write_text(
         json.dumps(metadata, indent=2), encoding="utf-8"
     )
+
+    # Keep the full research model above in LFS and also produce a smaller
+    # inference artifact that fits Render's 512 MiB free instance.
+    runtime_pipeline = make_pipeline(ExtraTreesRegressor(
+        n_estimators=100, random_state=42, n_jobs=-1, min_samples_leaf=4
+    ))
+    runtime_pipeline.fit(X_train, y_train)
+    runtime_predictions = runtime_pipeline.predict(X_test)
+    runtime_metrics = {
+        "mae_hours": float(mean_absolute_error(y_test, runtime_predictions)),
+        "rmse_hours": float(mean_squared_error(y_test, runtime_predictions) ** 0.5),
+        "r2": float(r2_score(y_test, runtime_predictions)),
+    }
+    joblib.dump(runtime_pipeline, output_dir / "shipment_delivery_time_model_runtime.joblib")
+    runtime_metadata = {
+        "project": "Logistic Shipment Date and Time Predictor",
+        "target": TARGET,
+        "best_model": "Extra Trees (100 trees, min leaf 4)",
+        "feature_columns": FEATURES,
+        "target_unit": "hours",
+        "random_state": 42,
+        "training_rows": len(X_train),
+        "test_rows": len(X_test),
+        "metrics": {key: round(float(value), 4) for key, value in runtime_metrics.items()},
+        "source_model_retained": "shipment_delivery_time_model.joblib",
+    }
+    (output_dir / "shipment_delivery_time_model_runtime_metadata.json").write_text(
+        json.dumps(runtime_metadata, indent=2), encoding="utf-8"
+    )
     print("\nMODEL COMPARISON")
     print(json.dumps(results, indent=2))
     print("\nSELECTED MODEL")
