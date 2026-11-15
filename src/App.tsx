@@ -14,7 +14,11 @@ const options = {
   packageType: ["Automobile Parts", "Clothing", "Cosmetics", "Documents", "Electronics", "Fragile Items", "Furniture", "Groceries", "Pharmacy"],
 }
 const fieldLabels: Record<keyof FormData, string> = { deliveryPartner: "Delivery Partner", packageType: "Package Type", distance: "Distance", packageWeight: "Package Weight" }
-const API_URL = import.meta.env.VITE_PREDICTION_API_URL || "/api/predict"
+const configuredApiUrl = import.meta.env.VITE_SHIPTIME_API_URL || import.meta.env.VITE_PREDICTION_API_URL
+const normalizedApiUrl = configuredApiUrl?.replace(/\/+$/, "")
+const API_URL = normalizedApiUrl
+  ? normalizedApiUrl.endsWith("/api/predict") ? normalizedApiUrl : `${normalizedApiUrl}/api/predict`
+  : "/api/predict"
 function Icon({ name, className = "size-5" }: { name: IconName; className?: string }) {
   const paths: Record<IconName, ReactNode> = {
     arrow: <path d="M5 12h14m-5-5 5 5-5 5" />,
