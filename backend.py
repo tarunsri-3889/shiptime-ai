@@ -19,7 +19,9 @@ CORS(app)
 if not MODEL_PATH.exists() or not METADATA_PATH.exists():
     raise FileNotFoundError("Model or metadata missing. Run train_model.py first.")
 
-model = joblib.load(MODEL_PATH)
+# The fitted trees contain large NumPy arrays. Memory mapping lets the API read
+# those arrays from the LFS-backed file without copying the full model into RAM.
+model = joblib.load(MODEL_PATH, mmap_mode="r")
 metadata = json.loads(METADATA_PATH.read_text(encoding="utf-8"))
 FEATURE_COLUMNS = metadata.get("feature_columns", [])
 EXPECTED_FEATURES = [
